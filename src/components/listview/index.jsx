@@ -62,6 +62,7 @@ class ListView extends React.Component {
     console.log(this.statec.touch)
 
     this._scrollTo(anchorIndex)
+    this.scrollY()
   }
   onShortcutTouchMove () {
     event.preventDefault()
@@ -70,32 +71,26 @@ class ListView extends React.Component {
     let delta = (this.statec.touch.y2 - this.statec.touch.y1) / ANCHOR_HEIGHT | 0
     let anchorIndex = parseInt(this.statec.touch.anchorIndex) + delta
     this._scrollTo(anchorIndex)
+    this.scrollY()
   }
-  scroll = (pos) => {
-    this.statec.scrollY = pos.y
-    // 当滚动到顶部，newY>0
-    if (pos.y > 0) {
-      this.setState({
-        currentIndex: 0
-      })
+  scrollY () {
+    if (this.statec.scrollY > 0) {
       return
     }
-    // 在中间部分滚动
     for (let i = 0; i < listHeight.length - 1; i++) {
       let height1 = listHeight[i]
       let height2 = listHeight[i + 1]
-      if (-pos.y >= height1 && -pos.y < height2) {
-        this.setState({
-          currentIndex: i
-        })
-        this.statec.diff = height2 + pos.y
-        console.log(pos.y, height1)
+      if (-this.statec.scrollY >= height1 && -this.statec.scrollY < height2) {
+        this.setState({ currentIndex: i })
+        this.statec.diff = height2 + this.statec.scrollY
         return
       }
     }
-    this.setState({
-      currentIndex: listHeight.length - 2
-    })
+    // this.setState({ currentIndex: listHeight.length - 2 })
+  }
+  scroll = (pos) => {
+    this.statec.scrollY = pos.y
+    this.scrollY()
   }
   componentDidMount () {
     this.refs.shortcut.addEventListener('touchstart', () => {

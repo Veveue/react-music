@@ -51,7 +51,6 @@ class Signer extends React.Component {
         id: item.Fsinger_mid
       }))
     })
-    // 为了得到有序列表，我们需要处理 map
     let ret = []
     let hot = []
     for (let key in map) {
