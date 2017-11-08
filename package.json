@@ -74,16 +74,23 @@
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.20.0",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^2.1.1"
   },
   "dependencies": {
+    "axios": "^0.16.1",
+    "better-scroll": "^0.1.15",
+    "jsonp": "0.2.1",
+    "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "prop-types": "^15.6.0",
-    "react-router-config": "^1.0.0-beta.4",
     "react-loadable": "^5.3.0",
-    "react-router-dom": "^4.2.2",
     "react-redux": "^5.0.6",
+    "react-router-config": "^1.0.0-beta.4",
+    "react-router-dom": "^4.2.2",
+    "react-slot": "^0.1.2",
+    "react-slot-fill": "^1.0.2",
     "redux": "^3.7.2"
   },
   "engines": {

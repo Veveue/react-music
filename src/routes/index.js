@@ -1,6 +1,8 @@
 import Loadable from 'react-loadable'
 import MainView from 'views/MainView'
 import SyncView from 'views/SyncView'
+import recommend from 'views/recommend'
+import Singer from 'views/singer'
 
 const AsyncView = Loadable({
   loader: () => import('views/AsyncView'),
@@ -13,6 +15,7 @@ export default [
   {
     path: '/',
     component: MainView,
+    redirectTo: '/recommend',
     childRoutes: [
       {
         path: '/sync',
@@ -21,6 +24,14 @@ export default [
       {
         path: '/async',
         component: AsyncView
+      },
+      {
+        path: '/recommend',
+        component: recommend
+      },
+      {
+        path: '/singer',
+        component: Singer
       }
     ]
   }

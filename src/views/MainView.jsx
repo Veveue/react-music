@@ -1,18 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { renderRoutes } from 'react-router-config'
-import { NavLink as Link } from 'react-router-dom'
-import './MainView.css'
+import MHeader from 'components/m-header/'
+import Tab from 'components/tab/'
 
 const MainView = ({ route }) => (
   <div className='main-view'>
-    <div className='btn-group'>
-      <Link to='/sync' className='btn' activeClassName='active'>To Sync</Link>
-      <Link to='/async' className='btn' activeClassName='active'>To Async</Link>
-    </div>
-    <div className='view'>
-      {renderRoutes(route.childRoutes)}
-    </div>
+    <MHeader />
+    <Tab />
+    {renderRoutes(route.childRoutes)}
   </div>
 )
 
