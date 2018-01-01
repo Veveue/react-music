@@ -4,8 +4,7 @@ import {Link} from 'react-router-dom'
 import './index.styl'
 const Mheader = ({msg}) => (
   <div className='m-header'>
-    <div className='icon' />
-    <h1 className='text'>Chicken Music</h1>
+    <h1 className='text'>Music</h1>
     <Link to='/user' className='mine'><i className='icon-mine' /></Link>
   </div>
 )

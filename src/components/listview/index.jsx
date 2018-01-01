@@ -28,7 +28,8 @@ class ListView extends React.Component {
     }
     this.state = {
       currentIndex: 0,
-      fixedTitle: ''
+      fixedTitle: '',
+      refreshScroll: false
     }
   }
   fixedTitle () {
@@ -81,9 +82,11 @@ class ListView extends React.Component {
       let height1 = listHeight[i]
       let height2 = listHeight[i + 1]
       if (-this.statec.scrollY >= height1 && -this.statec.scrollY < height2) {
-        this.setState({ currentIndex: i })
         this.statec.diff = height2 + this.statec.scrollY
+        // console.log(this.statec.diff, i)
+        this.setState({ currentIndex: i })
         return
+      } else {
       }
     }
     // this.setState({ currentIndex: listHeight.length - 2 })
@@ -91,6 +94,9 @@ class ListView extends React.Component {
   scroll = (pos) => {
     this.statec.scrollY = pos.y
     this.scrollY()
+  }
+  selectItem = (c) => {
+    this.props.select(c)
   }
   componentDidMount () {
     this.refs.shortcut.addEventListener('touchstart', () => {
@@ -106,13 +112,21 @@ class ListView extends React.Component {
   componentDidUpdate () {
     _calculateHeight()
   }
+  componentWillUnmount () {
+    this.statec = {
+      scrollY: -1,
+      diff: -1,
+      touch: {}
+    }
+  }
   render () {
     const {data} = this.props
     const shortcutList = this.shortcutList()
     const fixedTitle = this.fixedTitle()
     const currentIndex = this.state.currentIndex
+    const me = this
     return (
-      <Scroll ref='listview' probeType={3} classNames={'listview'} onScroll={this.scroll} listenScroll>
+      <Scroll ref='listview' probeType={3} classNames={'listview'} refresh={this.state.refreshScroll} onScroll={this.scroll} listenScroll>
         <ul>
           {
             data.map(function (item, index) {
@@ -122,7 +136,7 @@ class ListView extends React.Component {
                   {
                     item.items.map(function (list, key) {
                       return (<ul key={key}>
-                        <li className='list-group-item'>
+                        <li className='list-group-item' onClick={() => me.selectItem(list)}>
                           <img className='avatar' src={list.avatar} />
                           <span className='name'>{list.name}</span>
                         </li>
@@ -157,6 +171,7 @@ ListView.defaultProps = {
 }
 
 ListView.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.array,
+  select: PropTypes.func
 }
 export default ListView

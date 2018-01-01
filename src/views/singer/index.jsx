@@ -1,10 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {getSingerList} from 'api/singer'
+import { renderRoutes } from 'react-router-config'
 import {ERR_OK} from 'api/config'
+import { connect } from 'react-redux'
 import Singer from 'common/js/singer'
 import './index.styl'
 import ListView from 'components/listview/'
 
+import { setSinger } from '../../redux/actions'
 const HOT_SINGER_LEN = 10
 const HOT_NAME = '热门'
 class Signer extends React.Component {
@@ -21,7 +25,6 @@ class Signer extends React.Component {
         this.setState({
           singers: this._normalizeSinger(res.data.list)
         })
-        console.log(this.state.singers)
       }
     })
   }
@@ -66,15 +69,32 @@ class Signer extends React.Component {
     })
     return hot.concat(ret)
   }
+  selectSinger =(singer) => {
+    this.props.dispatch(setSinger(singer))
+    this.props.history.push('/singer/' + singer.id)
+  }
   componentWillMount () {
     this._getSingerList()
   }
   render () {
     return (
       <div className='singer' ref='singer'>
-        <ListView ref='list' data={this.state.singers} />
+        <ListView ref='list' data={this.state.singers} select={this.selectSinger} />
+        {renderRoutes(this.props.route.childRoutes)}
       </div>
     )
   }
 }
-export default Signer
+
+Signer.propTypes = {
+  history: PropTypes.object,
+  route: PropTypes.object,
+  dispatch: PropTypes.func
+}
+export default connect(
+  (state) => {
+    return {
+      singer: state.singers
+    }
+  }
+)(Signer)

@@ -25,7 +25,6 @@ class Scroll extends React.Component {
       let { onScroll } = this.props
       this.scroll.on('scroll', (pos) => {
         // 向父组件传值
-        console.log(pos, '11111')
         onScroll(pos)
       })
     }
